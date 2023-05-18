@@ -16,7 +16,7 @@ COPY . .
 # Expose the port that Django runs on (default is 8000)
 EXPOSE 8000
 
-# Start the Django development server
+#  Start the Django development server
 CMD ["python", "manage.py", "makemigrations","wallet"]
 CMD ["python", "manage.py", "migrate"]
 
