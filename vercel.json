@@ -1,13 +1,7 @@
 {
-    "builds": [{
-        "src": "bitcoin_wallet/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "50mb","version":"python3.9" }
-    }],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "bitcoin_wallet/wsgi.py"
-        }
-    ]
+  "version": 2,
+  "builds": [
+    { "src": "Dockerfile", "use": "@vercel/docker" }
+  ]
 }
+
