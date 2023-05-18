@@ -16,10 +16,12 @@ class User(AbstractUser):
     token=models.CharField(null=True,blank=True,max_length=30)
 
 class address_book(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
     bit_id=models.CharField(max_length=50)
     Address=models.CharField(max_length=500)
 
 class wallet_details(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
     balance = models.CharField(max_length=500)
     INR_balance = models.CharField(max_length=500)
     private_key = models.CharField(max_length=500)
