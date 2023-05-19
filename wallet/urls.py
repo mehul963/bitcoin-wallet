@@ -11,3 +11,4 @@ urlpatterns = [
     path('send', views.send, name='send'),
     path('logout', views.logout, name='logout'),
 ]
+
