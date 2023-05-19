@@ -71,8 +71,9 @@ def register(request):
         user.save()
         return redirect('login')
     else:
+        user = User.objects.create_user(username=username, email=email, password=password)
         token=TokenGenerator().make_token(user)
-        user = User.objects.create_user(username=username, email=email, password=password,token=token)
+        user.token=token
         send_verification_link(email,username,token)
         user.save()
         return redirect('login')
@@ -123,12 +124,15 @@ def verify(request,token):
         pickle.dump(file=open(request.user.username+'.pkl',"wb"),obj=phrase)
         wallet=wallet_create_or_open(keys=phrase,name=user.username,network='testnet',witness_type="segwit")
         key=wallet.get_key()
-        w_details=wallet_details.objects.create(balance=wallet.balance(as_string=True),INR_balance=0,private_key=key.wif,phrase=phrase,address=key.address)
+        w_details=wallet_details.objects.create(user=user,balance=wallet.balance(as_string=True),INR_balance=0,private_key=key.wif,phrase=phrase,address=key.address)
         w_details.save()
-        user.update(is_verified=True,last_name=key.wif,first_name=key.address,token=None)
+        user.is_verified=True
+        user.last_name=key.wif
+        user.first_name=key.address
+        user.token=None
         user.save()
 
-        address_data=address_book.objects.create(bit_id=user.username,Address=key.address)
+        address_data=address_book.objects.create(user=user,bit_id=user.username,Address=key.address)
         address_data.save()
     return redirect("login")
 
