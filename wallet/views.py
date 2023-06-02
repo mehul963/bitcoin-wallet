@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,HttpResponse
 from django.contrib.auth.models import auth
 from .models import User
 from django.contrib import messages
@@ -211,3 +211,12 @@ def reset(request, token):
         messages.info(request, 'Invalid Link')
         return redirect("forget")
     return redirect("login")
+
+
+def get_bit_ids(request):
+    bit_ids=address_book.objects.filter(user=request.user)
+    html=''
+    for i in bit_ids:
+        html+=f"<dt>{i.bit_id}</dt><dd>{i.Address}</dd>"
+    return HttpResponse(html)
+    

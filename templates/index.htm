@@ -18,6 +18,27 @@
     <link rel="stylesheet" href="{% static 'css/template-style.css' %}">
     <script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/validation.js' %}"></script>
+    
+    <style>
+        .nav-container{
+            position: absolute;
+            inset-block: 0;
+            background-color: blueviolet;
+            color: white;
+            right: -10rem;
+            display: none;
+            padding-inline: 2em;
+            gap: 2rem;
+            padding-top: 8em;
+            color: white;
+            transition: all 500ms;
+            width: 20rem;
+        }
+        .btn{
+            position: absolute;
+            bottom: 1rem;
+        }
+    </style>
 </head>
 
 <body class="size-1140">
@@ -34,7 +55,7 @@
                     <ul class="right chevron">
                         {% if user.is_authenticated %}
                         <li><a>Hello, {{user.username}}</a></li>
-                        <li><a>Address Book</a></li>
+                        <li><a hx-post="get-ids" hx-target='#bitids' tabindex="2" onclick="show_address()">Address Book</a></li>
                         <li><a href="logout">Logout</a></li>
                         <li> <a href="login" class="icon-refresh"></a></li>
                         {% else %}
@@ -46,6 +67,19 @@
             </div>
         </nav>
     </header>
+    <nav tabindex="2"  class="flex nav-container gap-1 z-index10 show" id='address' onblur="hide_address()">
+        <div class="address">
+            <dl id='bitids'>
+                
+            </dl>
+        </div>
+        <form action="add_ids" method="post" style="display: flex;flex-direction: column;justify-items: center;">
+            <input type="text" name='bit_id'>
+            <input type="text" name='address'>
+            <button>Add</button>
+        </form>
+        <button class="btn">Add</button>
+    </nav>
 
     <!-- MAIN -->
     <main role="main">
@@ -176,7 +210,7 @@
             </div>
     </footer>
 
-    <div id="popup" style="display: none;">
+    <div tabindex="2" id="popup" style="display: none;" onblur="hide()">
 		<form class="fiteam fcontainer" method="post" action="send">
 			<input type="text" name="bit_id" placeholder="Enter Bit ID" required>
 			<input type="text" name="amount" placeholder="Amount" required >
@@ -192,13 +226,27 @@
             box=document.getElementById("popup")
             box.className="fcontainer"
             box.style=""
+            box.focus()
         }
         function hide() {
             box=document.getElementById("popup")
             box.className=""
             box.style="display:none"
         }
+        function show_address(){
+            box=document.getElementById("address")
+            box.style.display="block"
+            box.style.right="0"
+            box.focus()
+        }
+        function hide_address(){
+            box=document.getElementById("address")
+            box.style.right="-10rem"
+            box.style.display='none'
+        }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.2/htmx.min.js" integrity="sha512-ULbUWm8wCS6zRoxK/2v51vUHGhKvK8PSiqA02tyUYlYoeQm5wB8xr8lObq5zmNGpYaZsED0NLhaiPAAm2VbhXw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
 
 </html>
