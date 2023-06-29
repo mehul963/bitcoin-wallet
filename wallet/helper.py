@@ -1,7 +1,7 @@
 from trycourier import Courier
 client = Courier(auth_token="pk_test_DDKR2Q0F8C4VM5JYPDDPXRRWCCXW")
 web_url="https://8000-cs-513293748685-default.cs-asia-southeast1-yelo.cloudshell.dev"
-def send_transaction_email(status,email,username,amount,bit_id):
+def send_transaction_email(status,email,username,amount,bit_id,web_url):
     resp = client.send_message(
                 message={
                     "to": {
@@ -17,7 +17,7 @@ def send_transaction_email(status,email,username,amount,bit_id):
                 }
             )
 
-def send_verification_link(email,username,token):
+def send_verification_link(email,username,token,web_url):
     resp = client.send_message(
         message={
             "to": {
@@ -30,7 +30,7 @@ def send_verification_link(email,username,token):
             },
         }
         )
-def send_reset_link(email,username,token):
+def send_reset_link(email,username,token,web_url):
     resp = client.send_message(
         message={
             "to": {

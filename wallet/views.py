@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from bitcoinlib.mnemonic import Mnemonic
 import pickle
 import six
-from functools import lru_cache
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from .helper import *
 
@@ -31,7 +30,6 @@ def index(request):
 
 
 def login(request):
-    global wallet
     if request.user.is_authenticated:
         refresh(request)
         return redirect("/")
@@ -73,7 +71,7 @@ def register(request):
     elif User.objects.filter(username=username).exists() and (not User.objects.filter(username=username).first().is_verified):
         user = User.objects.get(username=username)
         token = TokenGenerator().make_token(user)
-        s = send_verification_link(email, username, token)
+        s = send_verification_link(email, username, token,request.get_host())
         print(s)
         user.token = token
         user.save()
@@ -83,7 +81,7 @@ def register(request):
             username=username, email=email, password=password)
         token = TokenGenerator().make_token(user)
         user.token = token
-        send_verification_link(email, username, token)
+        send_verification_link(email, username, token,request.get_host())
         user.save()
         return redirect('login')
     return redirect('/')
@@ -137,7 +135,7 @@ def send(request):
                 print(e)
             status = "successful"
             send_transaction_email(
-                status, request.user.email, request.user.username, amount, bit_id)
+                status, request.user.email, request.user.username, amount, bit_id,request.get_host())
         else:
             messages.info(request, 'User not found')
     print(wallet)

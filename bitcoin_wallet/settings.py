@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS =["https://8000-cs-513293748685-default.cs-asia-southeast1-ajrg.cloudshell.dev"]
+CSRF_TRUSTED_ORIGINS =["https://8000-cs-513293748685-default.cs-asia-southeast1-ajrg.cloudshell.dev",'https://6acd-34-124-246-22.ngrok-free.app']
 # Application definition
 
 INSTALLED_APPS = [
@@ -121,3 +121,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

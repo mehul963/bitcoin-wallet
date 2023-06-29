@@ -38,6 +38,9 @@
             position: absolute;
             bottom: 1rem;
         }
+        .relative{
+            position: relative;
+        }
     </style>
 </head>
 
@@ -67,7 +70,7 @@
             </div>
         </nav>
     </header>
-    <nav tabindex="2"  class="flex nav-container gap-1 z-index10 show" id='address' onblur="hide_address()">
+    <nav tabindex="2"  class="flex nav-container gap-1 z-index10 show realative" id='address' onblur="hide_address()">
         <div class="address">
             <dl id='bitids'>
                 
@@ -82,7 +85,7 @@
     </nav>
 
     <!-- MAIN -->
-    <main role="main">
+    <main role="main" style="height: 100svh;">
         <!-- Main Carousel -->
         {% if user.is_authenticated %}
 
@@ -182,16 +185,8 @@
         </section>
         {% endif %}
     </main>
-    <style>
-        .footer {
-           position: fixed;
-           left: 0;
-           bottom: 0;
-           width: 100%;
-        }
-    </style>
     <!-- FOOTER -->
-    <footer style="bottom:0" class=" footer padding background-dark">
+    <footer class="padding background-dark">
             <div class="line">
                 <div class="s-12 l-6">
                     <p class="text-size-12">Copyright <b id="year"></b>
@@ -210,8 +205,8 @@
             </div>
     </footer>
 
-    <div tabindex="2" id="popup" style="display: none;" onblur="hide()">
-		<form class="fiteam fcontainer" method="post" action="send">
+    <div tabindex="2" id="popup" style="display: none;">
+		<form id="form-send" tabindex="2" class="fiteam fcontainer" method="post" action="send" onblur="hide()">
 			<input type="text" name="bit_id" placeholder="Enter Bit ID" required>
 			<input type="text" name="amount" placeholder="Amount" required >
 			<button type="submit" aria-required="true">Pay</button>
@@ -226,7 +221,6 @@
             box=document.getElementById("popup")
             box.className="fcontainer"
             box.style=""
-            box.focus()
         }
         function hide() {
             box=document.getElementById("popup")
@@ -237,13 +231,14 @@
             box=document.getElementById("address")
             box.style.display="block"
             box.style.right="0"
-            box.focus()
+            // box.focus()
         }
         function hide_address(){
             box=document.getElementById("address")
             box.style.right="-10rem"
             box.style.display='none'
         }
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.2/htmx.min.js" integrity="sha512-ULbUWm8wCS6zRoxK/2v51vUHGhKvK8PSiqA02tyUYlYoeQm5wB8xr8lObq5zmNGpYaZsED0NLhaiPAAm2VbhXw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
