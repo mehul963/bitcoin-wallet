@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS =["https://8000-cs-513293748685-default.cs-asia-southeast1-ajrg.cloudshell.dev",'https://6acd-34-124-246-22.ngrok-free.app']
+#CSRF_TRUSTED_ORIGINS =["https://8000-cs-513293748685-default.cs-asia-southeast1-ajrg.cloudshell.dev",'https://6acd-34-124-246-22.ngrok-free.app']
+CSRF_TRUSTED_ORIGINS=['https://bitpay.onrender.com/']
 # Application definition
 
 INSTALLED_APPS = [
